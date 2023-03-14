@@ -1,0 +1,18 @@
+version: "3"
+services:
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    environment:
+      DB_MYSQL_HOST: ${DB_MYSQL_HOST}
+      DB_MYSQL_PORT: ${DB_MYSQL_PORT}
+      DB_MYSQL_USER: ${DB_MYSQL_USER}
+      DB_MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
+      DB_MYSQL_NAME: ${DB_MYSQL_NAME}
+    volumes:
+      - /mnt/nfs/reverseproxydata/nginx-proxy-manager/volumes/data:/data
+      - /mnt/nfs/reverseproxydata/nginx-proxy-manager/volumes/letsencrypt:/etc/letsencrypt
