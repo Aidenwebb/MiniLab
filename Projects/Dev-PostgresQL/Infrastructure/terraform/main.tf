@@ -3,6 +3,7 @@ resource "proxmox_lxc" "postgres" {
   hostname     = "dev-postgres"
   ostemplate   = "NAS-MiniLab:vztmpl/debian-11-turnkey-postgresql_17.1-1_amd64.tar.gz"
   password     = var.vm_root_password
+  start        = true
   unprivileged = true
   onboot       = true
   swap         = 512
