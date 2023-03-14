@@ -6,7 +6,7 @@
   become: true
   vars:
     - mounts:
-        - { path: /mnt/nfs/reverseproxydata, src: nas.homelan.win:/nas.homelan.win/nfs-minilab-reverseproxydata, fstype: nfs, opts: "vers=4,minorversion=1,sec=sys" }
+        - { path: /mnt/nfs/reverseproxydata, src: nas.homelan.win:/nfs-minilab-reverseproxydata, fstype: nfs, opts: "vers=3,sec=sys" }
   roles:
     - { role: bootstrap, tags: bootstrap }
 
@@ -17,9 +17,9 @@
   roles:
     - { role: docker_host, tags: docker_host }
 
-# - name: Deploy Nginx Proxy Manager
-#   hosts: all
-#   user: root
-#   become: true
-#   roles:
-#     - { role: nginx_proxy_manager_node, tags: nginx_proxy_manager_node }
+- name: Deploy Nginx Proxy Manager
+  hosts: all
+  user: root
+  become: true
+  roles:
+    - { role: nginx_proxy_manager, tags: nginx_proxy_manager }
