@@ -1,25 +1,42 @@
-resource "proxmox_lxc" "reverseproxy" {
-  target_node  = "pve-edg2-01"
-  hostname     = "core-reverseproxy"
-  ostemplate   = "NAS-MiniLab:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst"
-  password     = var.vm_root_password
-  start        = true
-  unprivileged = false
-  onboot       = true
-  swap         = 512
-  memory       = 512
+resource "proxmox_vm_qemu" "reverseproxy" {
 
-  rootfs {
+  name  = lower(format("%s-%02s", "core-reverseproxy", count.index + 1))
+  count = 1
+
+  target_node = "pve-edg2-01"
+  clone       = "template-ubuntu-2204"
+  full_clone  = true
+
+  agent    = 1
+  os_type  = "cloud-init"
+  cores    = 2
+  sockets  = 1
+  cpu      = "host"
+  memory   = 2048
+  scsihw   = "virtio-scsi-pci"
+  bootdisk = "scsi0"
+
+  ipconfig0 = "ip=192.168.1.4/24,gw=192.168.1.1"
+
+  disk {
     storage = "local-vmdata"
-    size    = "8G"
+    type    = "scsi"
+    size    = "50G"
+    ssd     = 1
+    discard = "on"
   }
-
-  // need to set features in GUI as root to enable NFS/Nesting
 
   network {
-    name   = "eth0"
+    model  = "virtio"
     bridge = "vmbr0"
-    ip     = "192.168.1.4/24"
-    gw     = "192.168.1.1"
+
   }
+
+  lifecycle {
+    ignore_changes = [
+      network,
+    ]
+  }
+
 }
+
