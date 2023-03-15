@@ -2,7 +2,7 @@
 
 - name: Boostrap system
   hosts: all
-  user: root
+  user: aiden
   become: true
   vars:
     - mounts:
@@ -12,14 +12,14 @@
 
 - name: Provision docker on hosts
   hosts: all
-  user: root
+  user: aiden
   become: true
   roles:
     - { role: docker_host, tags: docker_host }
 
 - name: Deploy Nginx Proxy Manager
   hosts: all
-  user: root
+  user: aiden
   become: true
   roles:
     - { role: nginx_proxy_manager, tags: nginx_proxy_manager }
