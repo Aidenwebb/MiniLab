@@ -17,9 +17,10 @@ Primarily:
 
 * [S] Datastore
   * [S] NAS
-* [ ] Databases
-  * [ ] PostgreSQL
-* [ ] Ingress
+* [S] Databases
+  * [S] PostgreSQL
+* [S] Ingress
+  * [S] Traefik
 * [ ] Admin Tools
   * [ ] Adminer for Database Management
 * [ ] Log Aggregation
