@@ -83,6 +83,8 @@ flowchart TD
       J
       L
       M
+      N
+      O
     end
     A[Modem] o--o B[MiniPc]
     B o--o C[Core Switch]
@@ -92,10 +94,12 @@ flowchart TD
     D o--o F[Media PC]
     C o-- POE PD --o G[Office Hub Switch]
     G o--o H[Office Desk Switch]
+    H o--o N[My Workstation]
     G o--o I[Office Spoke Switch]
     I o--o J[Partners Desk Switch]
     I o--o L[NAS]
     I o--o M[Proxmox Cluster]
+    J o--o O[Partners Workstation]
 ```
 
 #### VLANs
