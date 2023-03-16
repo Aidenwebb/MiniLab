@@ -1,0 +1,72 @@
+---
+- name: Remove existing {{ docker_traefik__name }} container
+  docker_container:
+    name: "{{ docker_traefik__name }}"
+    state: absent
+  when: docker_traefik__remove_existing_container
+
+- name: Remove home directory
+  file:
+    state: absent
+    path: "{{ docker_traefik__home }}"
+  when: docker_traefik__remove_existing_home_dir
+
+- name: Create directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('0755') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  with_items: "{{ docker_traefik__directories }}"
+
+- name: Check acme.json file exists
+  stat:
+    path: "{{ docker_traefik__home }}/acme/acme.json"
+  register: register_acme_json
+
+- name: Create acme.json file if not exists
+  file:
+    path: "{{ docker_traefik__home }}/acme/acme.json"
+    state: touch
+    mode: 0600
+  when: not register_acme_json.stat.exists
+
+- name: Copy traefik.yml file
+  template:
+    src: traefik.yml.j2
+    dest: "{{ docker_traefik__home }}/conf/traefik.yml"
+    mode: 0600
+
+- name: Create the traefik_web network
+  docker_network:
+    name: "{{ docker_traefik__docker_network }}"
+
+- name: debug volumes
+  debug:
+    msg: "{{ docker_traefik__directory_volumes + docker_traefik__file_volumes }}"
+
+- name: Run the traefik container
+  docker_container:
+    name: "{{ docker_traefik__name }}"
+    image: "{{ docker_traefik__image }}"
+    pull: "{{ docker_traefik__pull_image }}"
+    restart_policy: always
+    recreate: true
+    networks:
+      - name: "{{ docker_traefik__docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8082:8082"
+    volumes: "{{ docker_traefik__directory_volumes + docker_traefik__file_volumes }}" # yamllint disable-line rule:line-length
+    env: "{{ docker_traefik__default_env | combine(docker_traefik__env) }}"
+    log_driver: "{{ docker_traefik__log_driver }}"
+    log_options: "{{ docker_traefik__log_options }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.traefik.rule: "Host(`{{ docker_traefik__api_uri }}`)"
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.middlewares: "auth"
+      traefik.http.middlewares.auth.basicauth.users: "{{ docker_traefik__api_admin_username }}:{{ docker_traefik__api_admin_password_hash }}"

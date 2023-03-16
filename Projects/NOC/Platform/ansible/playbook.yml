@@ -10,7 +10,7 @@
   roles:
     - { role: bootstrap, tags: bootstrap }
 
-- name: Provision docker on hosts
+- name: Provision docker
   hosts: all
   user: aiden
   become: true
@@ -18,7 +18,7 @@
     - { role: docker_host, tags: docker_host }
 
 
-- name: Provision postgres on hosts
+- name: Provision postgres
   hosts: all
   user: aiden
   become: true
@@ -26,3 +26,15 @@
     - postgresql__postgres_data_target: /mnt/nfs/sandboxdata/postgresdata
   roles:
     - { role: postgres, tags: postgres }
+
+- name: Provision Traefik
+  become: true
+  hosts: all
+  vars:
+    docker_traefik__host_uri: s-noc.homelan.win
+    docker_traefik__acme_email: aiden.webb@gmail.com
+    docker_traefik__default_env:
+      CF_API_EMAIL: "{{ lookup('ansible.builtin.env','CLOUDFLARE_API_EMAIL') }}"
+      CF_DNS_API_TOKEN: "{{ lookup('ansible.builtin.env','CLOUDFLARE_DNS_API_TOKEN') }}"
+  roles:
+    - { role: docker_traefik, tags: docker_traefik }

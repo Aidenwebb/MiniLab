@@ -1,0 +1,37 @@
+docker_traefik__name: traefik
+docker_traefik__image: traefik:latest
+docker_traefik__port: 80
+docker_traefik__port_https: 443
+docker_traefik__api_admin_username: admin
+docker_traefik__api_admin_password_hash: $2y$05$BBZCv3fUQ5PkEmsvhAwOHeZIlbnJO0gdJ1isMOjwismOfACsfnHEq
+docker_traefik__remove_existing_container: yes
+docker_traefik__remove_existing_home_dir: no
+docker_traefik__pull_image: yes
+docker_traefik__log_driver: syslog
+docker_traefik__log_options:
+  syslog-facility: local0
+  tag: "{{ docker_traefik__name }}"
+docker_traefik__acme_email:
+docker_traefik__home: "/opt/{{ docker_traefik__name }}"
+docker_traefik__directories:
+  - path: "{{ docker_traefik__home }}"
+    mode: "0700"
+  - path: "{{ docker_traefik__home }}/acme"
+  - path: "{{ docker_traefik__home }}/conf"
+docker_traefik__dir_user: root
+docker_traefik__dir_group: docker
+docker_traefik__file_volumes:
+  - "{{ docker_traefik__home }}/conf/traefik.yml:/etc/traefik/traefik.yml"
+  - "{{ docker_traefik__home }}/acme/acme.json:/acme.json"
+  - "/var/run/docker.sock:/var/run/docker.sock"
+docker_traefik__directory_volumes: []
+
+docker_traefik__docker_network: traefik_web
+
+docker_traefik__host_uri:
+docker_traefik__api_uri: "traefik.{{ docker_traefik__host_uri }}"
+docker_traefik__acme_provider: "cloudflare"
+docker_traefik__env: []
+docker_traefik__default_env:
+  CF_API_EMAIL:
+  CF_DNS_API_TOKEN:
