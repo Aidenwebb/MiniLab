@@ -17,3 +17,12 @@
   roles:
     - { role: docker_host, tags: docker_host }
 
+
+- name: Provision postgres on hosts
+  hosts: all
+  user: aiden
+  become: true
+  vars:
+    - postgresql__postgres_data_target: /mnt/nfs/sandboxdata/postgresdata
+  roles:
+    - { role: postgres, tags: postgres }
