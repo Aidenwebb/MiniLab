@@ -1,0 +1,20 @@
+---
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: present
+    update_cache: true
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - nfs-common
+
+- name: Add mounts
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts }}"
+    state: mounted
+  with_items: "{{ mounts }}"

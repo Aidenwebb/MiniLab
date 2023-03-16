@@ -1,0 +1,19 @@
+--- 
+
+- name: Boostrap system
+  hosts: all
+  user: aiden
+  become: true
+  vars:
+    - mounts:
+        - { path: /mnt/nfs/sandboxdata, src: nas.homelan.win:/nfs-minilab-sandbox-data, fstype: nfs, opts: "vers=3,sec=sys" }
+  roles:
+    - { role: bootstrap, tags: bootstrap }
+
+- name: Provision docker on hosts
+  hosts: all
+  user: aiden
+  become: true
+  roles:
+    - { role: docker_host, tags: docker_host }
+
