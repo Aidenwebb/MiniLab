@@ -66,7 +66,24 @@
 
 ```mermaid
 flowchart TD
-    
+    subgraph Livingroom
+      A
+      B
+      C
+      D
+      K
+      E
+      F
+    end
+
+    subgraph Office
+      G
+      H
+      I
+      J
+      L
+      M
+    end
     A[Modem] o--o B[MiniPc]
     B o--o C[Core Switch]
     C o--o D[TV Switch]
