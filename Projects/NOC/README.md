@@ -15,8 +15,8 @@ Primarily:
 
 ## Infrastructure
 
-* [ ] Datastore
-  * [ ] NAS
+* [S] Datastore
+  * [S] NAS
 * [ ] Databases
   * [ ] PostgreSQL
 * [ ] Ingress
