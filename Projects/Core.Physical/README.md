@@ -8,6 +8,10 @@ The core of the lab, I'll wrap this in to ansible at some point. For now, this i
 
 #### Fanless MiniPc
 
+**Cost:** £150 from AliExpress (March 2023)
+
+**Spec:**
+
 | Item    | Description                            |
 | ------- | -------------------------------------- |
 | Purpose | VM Host for PfSense & UniFi Controller |
@@ -18,6 +22,8 @@ The core of the lab, I'll wrap this in to ansible at some point. For now, this i
 
 #### HP Elitedesk 800 G2 Mini
 
+**Cost:** £100 each from eBay (January 2023), + £20 for 16GB RAM, + £50 for 1TB NVMe SSD from Amazon (March 2023)
+
 | Item     | Description                              |
 | -------- | ---------------------------------------- |
 | Purpose  | VM Host Cluster                          |
@@ -26,6 +32,20 @@ The core of the lab, I'll wrap this in to ansible at some point. For now, this i
 | Boot SSD | 256GB Samsung Evo 870 SATA SSD           |
 | Data SSD | 1TB Crucial P3 NVMe SSD                  |
 | OS       | Proxmox VE 7.3-3 (Debian)                |
+
+#### Netgear GS108Ev3
+
+**Cost:** £30 from Amazon (January 2021)
+
+#### Netgear GS116Ev3
+
+**Cost:** £80 from Amazon (December 2019)
+
+#### UniFi AP AC Pro
+
+#### Netgear GS110TPv2
+
+#### Netgear GS108T
 
 #### VM Hosts
 
@@ -42,6 +62,27 @@ The core of the lab, I'll wrap this in to ansible at some point. For now, this i
 
 ### Networking
 
+#### Diagram
+
+**Physical**
+
+```mermaid
+flowchart TD
+    
+    A[Modem] o--o B[MiniPc]
+    B o--o C[Core Switch]
+    C o--o D[TV Switch]
+    C o-- POE PD --o K[Unifi AP AC Pro]
+    D o--o E[TV]
+    D o--o F[Media PC]
+    C o-- POE PD --o G[Office Hub Switch]
+    G o--o H[Office Desk Switch]
+    G o--o I[Office Spoke Switch]
+    I o--o J[Partners Desk Switch]
+    I o--o L[NAS]
+    I o--o M[Proxmox Cluster]
+```
+
 #### VLANs
 
 | VLAN | Name          | Subnet     | Purpose                                                        |
@@ -54,8 +95,6 @@ The core of the lab, I'll wrap this in to ansible at some point. For now, this i
 | 14   | External DMZ  | 10.10.14.0 | Edge/Ingress/Gateway for services exposed to the internet      |
 | 15   | Data Store    | 10.10.15.0 | Home to file servers and shares, such as the NAS               |
 | 16   | Databases     | 10.10.16.0 | Home to database servers such as PostgreSQL and MariaDB        |
-
-
 
 #### Modem
 
@@ -107,8 +146,8 @@ Hardware:
 | 2          | Trunk          | [MiniPc - Router](#minipc---router)     | 3           | Uplink to Router                    |
 | 3          | Trunk          | [Office Hub Switch](#office-hub-switch) | 2           | Distribute to the Office Hub Switch |
 | 4          | Untagged-to-11 | Unmanaged TV Switch                     | 1           | Distribute to TV and Media PC       |
-| 5          | Untagged-to-11 |                                         |             | Pi Hole DNS/DHCP for LAN            |
-| 6          |                |                                         |             |                                     |
+| 5          | Untagged-to-11 |                                         |             | Pi Hole DNS/DHCP for LAN?           |
+| 6          | 9,10,11,12     | Unifi Wifi AP                           | 1           | Wireless access point               |
 | 7          |                |                                         |             |                                     |
 | 8          |                |                                         |             |                                     |
 
