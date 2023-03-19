@@ -21,8 +21,8 @@ Primarily:
   * [S] PostgreSQL
 * [S] Ingress
   * [S] Traefik
-* [ ] Admin Tools
-  * [ ] Adminer for Database Management
+* [S] Admin Tools
+  * [S] Adminer for Database Management
 * [ ] Log Aggregation
   * [ ] Logstash
   * [ ] Elasticsearch
