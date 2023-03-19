@@ -44,3 +44,17 @@
   hosts: all
   roles:
     - { role: admin_tools, tags: admin_tools }
+
+# - name: Provision Elk Stack
+#   become: true
+#   hosts: all
+#   roles:
+#     - { role: elk_stack, tags: elk_stack }
+
+- name: Provision Graylog Stack
+  become: true
+  hosts: all
+  vars: 
+    graylog_stack__graylog_password_secret: mDkttEu4VAtmikOBOkQ4b74Nc4DbJStKAMhATTOolaB5s3Tqkk5Fx73Pr4iVOr6YDrAFA0Lo9sbRPJRMiMUwOLodDv6GMIKn
+  roles: 
+    - { role: graylog_stack, tags: graylog_stack }
