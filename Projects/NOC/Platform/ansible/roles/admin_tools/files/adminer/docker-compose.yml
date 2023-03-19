@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - traefik_web
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.adminer.rule=Host(`adminer.s-noc.homelan.win`)
+      - traefik.http.routers.adminer.entrypoints=websecure
+  
+networks:
+  traefik_web:
+    external: true

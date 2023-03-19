@@ -38,3 +38,9 @@
       CF_DNS_API_TOKEN: "{{ lookup('ansible.builtin.env','CLOUDFLARE_DNS_API_TOKEN') }}"
   roles:
     - { role: docker_traefik, tags: docker_traefik }
+
+- name: Provision Admin tools
+  become: true
+  hosts: all
+  roles:
+    - { role: admin_tools, tags: admin_tools }
