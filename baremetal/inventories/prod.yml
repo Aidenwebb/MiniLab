@@ -1,0 +1,25 @@
+baremetal:
+  children:
+    masters:
+      hosts:
+        baremetal0:
+          {
+            ansible_host: 172.31.9.10,
+            mac: fc:3f:db:08:3f:a5,
+            disk: sda,
+            network_interface: eno1,
+          }
+        baremetal1:
+          {
+            ansible_host: 172.31.9.11,
+            mac: fc:3f:db:06:bc:77,
+            disk: sda,
+            network_interface: eno1,
+          }
+        baremetal2:
+          {
+            ansible_host: 172.31.9.12,
+            mac: fc:3f:db:06:16:98,
+            disk: sda,
+            network_interface: eno1,
+          }
