@@ -12,6 +12,7 @@ apt-get install -y make
 # Install ansible
 
 pip install ansible
+ansible-galaxy collection install community.general
 
 # Install Docker
 
