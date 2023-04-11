@@ -1,4 +1,4 @@
-baremetal:
+baremetal_pve:
   children:
     masters:
       hosts:
