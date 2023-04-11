@@ -1,0 +1,11 @@
+baremetal:
+  children:
+    masters:
+      hosts:
+        baremetal0:
+          {
+            ansible_host: 172.31.9.100,
+            mac: 9E:21:EC:4D:5F:C1,
+            disk: sda,
+            network_interface: eno1,
+          }
