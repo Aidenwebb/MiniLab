@@ -6,7 +6,7 @@
   roles:
     - proxmox
   vars:
-    - proxmox__vlans: [ 4, 5, 6, 8, 9, 10, 16, 24, 40 ]
+    - proxmox__vlans: [4, 5, 6, 8, 9, 10, 16, 24, 40]
       proxmox__network_interfaces_config:
         - name: eno1
           configure: true
