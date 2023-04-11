@@ -1,2 +1,7 @@
+---
 - name: Create Proxmox cluster
-  hosts: baremetal
+  hosts: baremetal_pve
+  become: true
+  become_user: root
+  roles:
+    - proxmox

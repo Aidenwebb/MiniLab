@@ -1,0 +1,11 @@
+---
+- name: Use Community Repo
+  include_tasks: use_community_repo.yml
+  when: proxmox__enterprise_repository_enabled == false
+
+- name: Use Enterprise Repo
+  include_tasks: use_enterprise_repo.yml
+  when: proxmox__enterprise_repository_enabled == true
+
+- name: Run updates
+  include_tasks: run_updates.yml

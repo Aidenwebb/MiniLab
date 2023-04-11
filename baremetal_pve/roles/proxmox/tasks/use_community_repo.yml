@@ -1,0 +1,17 @@
+---
+- name: Remove enterprise repo
+  apt_repository:
+    repo: deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise
+    filename: pve-enterprise
+    state: absent
+
+- name: Ensure enterprise repo file is not present
+  file:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    state: absent
+
+- name: Add community repo
+  apt_repository:
+    repo: deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription
+    filename: pve-no-subscription
+    state: present
