@@ -1,3 +1,5 @@
+---
+# Build PXE boot image and start pxe server
 - name: Start PXE server
   hosts: localhost
   roles:
