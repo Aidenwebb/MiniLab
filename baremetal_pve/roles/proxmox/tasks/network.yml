@@ -1,0 +1,29 @@
+---
+- name: Install OVS
+  apt:
+    name: openvswitch-switch
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+    force_apt_get: yes
+
+- name: Add OVS bridge
+  openvswitch_bridge:
+    bridge: vmbr1
+    state: present
+
+- name: Create VLANS
+  openvswitch_port:
+    bridge: vmbr1
+    port: 'vlan{{ "%04d" | format(item) }}'
+    tag: "{{ item }}"
+    state: present
+    set: Interface vlan{{ "%04d" | format(item) }} type=internal
+  loop: "{{ proxmox__vlans }}"
+
+- name: Add Physical NIC to bridge
+  openvswitch_port:
+    bridge: vmbr1
+    port: "{{ hostvars[item]['network_interface'] }}"
+    state: present
+  loop: "{{ groups['baremetal_pve'] }}"

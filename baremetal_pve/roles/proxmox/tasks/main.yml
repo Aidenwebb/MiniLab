@@ -9,3 +9,6 @@
 
 - name: Run updates
   include_tasks: run_updates.yml
+
+- name: Configure network
+  include_tasks: network.yml
