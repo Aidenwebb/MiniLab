@@ -1,6 +1,0 @@
----
-boot_image_iso_url: "https://www.proxmox.com/en/downloads?task=callelement&format=raw&item_id=681&element=f85c494b-2b32-4109-b8c1-083cca2b7db6&method=download&args[0]=cdd6248ecf9960daf3a099732fcdfda3"
-boot_image_iso_checksum: "sha256:55b672c4b0d2bdcbff9910eea43df3b269aaab3f23e7a1df18b82d92eb995916"
-boot_image_iso_dest_filename: "proxmox-ve.iso"
-dhcp_proxy: true
-timezone: "Europe/London"
