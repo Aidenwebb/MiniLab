@@ -1,0 +1,7 @@
+---
+- name: Bootstrap Proxmox Host
+  hosts: baremetal_pve
+  become: true
+  become_user: root
+  roles:
+    - bootstrap_for_ansible

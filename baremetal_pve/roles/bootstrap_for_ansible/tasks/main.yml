@@ -1,0 +1,6 @@
+---
+- name: Set authorised key from url
+  ansible.posix.authorized_key:
+    user: root
+    state: present
+    key: https://github.com/aidenwebb.keys
