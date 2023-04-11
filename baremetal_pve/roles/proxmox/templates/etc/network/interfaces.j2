@@ -21,8 +21,16 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
 {%        if interface['method']|lower == "static" or interface['method']|lower == "manual" %}
 {# Set Address #}
 {%          if interface['address'] is defined and interface['address'] != None %}
-  address {{ interface['address'] }}
+        address {{ interface['address'] }}
 {%          endif %}
+{# Set Netmask #}
+{%           if interface['netmask'] is defined and interface['netmask'] != None %}
+        netmask {{ interface['netmask'] }}
+{%           endif %}
+{# Set Gateway #}
+{%           if interface['gateway'] is defined and interface['gateway'] != None %}
+        gateway {{ interface['gateway'] }}
+{%           endif %}
 {%        endif %}
 
 {%      endif %}
