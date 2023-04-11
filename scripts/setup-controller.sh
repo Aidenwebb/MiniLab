@@ -8,6 +8,8 @@ apt-get upgrade
 apt-get install -y git
 apt-get install -y python-pip
 apt-get install -y make
+apt-get install -y cpio
+apt-get install -y zstd
 
 # Install ansible
 
