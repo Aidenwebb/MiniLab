@@ -1,0 +1,31 @@
+
+
+auto lo
+iface io inet loopback
+
+{% if proxmox__network_interfaces_config is defined %}
+
+### Network Interfaces
+
+{%   for interface in proxmox__network_interfaces_config %}
+{# Configuring interface #}
+{%      if interface['configure'] is defined and interface['configure'] %}
+{# Setting comment#}
+{%        if interface['comment'] is defined and interface['comment'] != None %}
+# {{ interface['comment'] }}
+{%      endif %}
+{# Setting name and method #}
+auto {{ interface['name'] }}
+iface {{ interface['name'] }} inet {{ interface['method']|lower }}
+{# Set Address, Netmask, Gateway if static or manual #}
+{%        if interface['method']|lower == "static" or interface['method']|lower == "manual" %}
+{# Set Address #}
+{%          if interface['address'] is defined and interface['address'] != None %}
+  address {{ interface['address'] }}
+{%          endif %}
+{%        endif %}
+
+{%      endif %}
+{%   endfor %}
+
+{% endif %}
