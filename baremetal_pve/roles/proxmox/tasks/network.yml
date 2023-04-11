@@ -12,7 +12,7 @@
     bridge: vmbr1
     state: present
 
-- name: Create VLANS
+- name: Create OVS VLANS
   openvswitch_port:
     bridge: vmbr1
     port: 'vlan{{ "%04d" | format(item) }}'
@@ -24,6 +24,5 @@
 - name: Add Physical NIC to bridge
   openvswitch_port:
     bridge: vmbr1
-    port: "{{ hostvars[item]['network_interface'] }}"
+    port: "{{ hostvars[inventory_hostname]['network_interface'] }}"
     state: present
-  loop: "{{ groups['baremetal_pve'] }}"
