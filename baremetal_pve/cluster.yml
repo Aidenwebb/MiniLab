@@ -7,3 +7,28 @@
     - proxmox
   vars:
     - proxmox__vlans: [ 4, 5, 6, 8, 9, 10, 16, 24, 40 ]
+      proxmox__network_interfaces_config:
+        - name: eno1
+          configure: true
+          enable: true
+          comment: "Physical Interface"
+          method: manual
+          address: 192.168.1.100
+          netmask: 255.255.255.0
+          gateway: 192.168.1.1
+          parameters:
+            - param: ovs_type
+              value: OVSPort
+            - param: ovs_bridge
+              value: "{{ proxmox__ovs_bridges_config.0.name }}"
+      proxmox__ovs_bridges_config:
+        - name: vmbr1
+          configure: true
+          enable: true
+          comment: "OVS Bridge"
+          method: manual
+          parameters:
+            - param: ovs_type
+              value: OVSBridge
+            - param: ovs_ports
+              value: "eno1 vlan0004 vlan0005 vlan0006 vlan0008 vlan0009 vlan0010 vlan0016 vlan0024"
