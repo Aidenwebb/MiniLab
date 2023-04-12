@@ -13,8 +13,7 @@
           enable: true
           comment: "Physical Interface"
           method: manual
-          address: 192.168.1.100
-          netmask: 255.255.255.0
+          address: 192.168.1.100/24
           gateway: 192.168.1.1
           parameters:
             - param: ovs_type
@@ -38,3 +37,69 @@
             - vlan0016
             - vlan0024
             - vlan0040
+      proxmox__ovs_intports_config:
+        - name: vlan0004
+          configure: true
+          enable: true
+          comment: "Management Access Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 4
+        - name: vlan0005
+          configure: true
+          enable: true
+          comment: "OOB Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 5
+        - name: vlan0006
+          configure: true
+          enable: true
+          comment: "Storage Devices Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 6
+        - name: vlan0008
+          configure: true
+          enable: true
+          comment: "Gateway Cluster Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 8
+        - name: vlan0009
+          configure: true
+          enable: true
+          comment: "PVE Cluster Network"
+          method: static
+          address: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}/24"
+          gateway: 172.31.9.1
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 9
+        - name: vlan0010
+          configure: true
+          enable: true
+          comment: "K8s Cluster Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 10
+        - name: vlan0016
+          configure: true
+          enable: true
+          comment: "Management Apps (No Internet) Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 16
+        - name: vlan0024
+          configure: true
+          enable: true
+          comment: "Management Apps (With Internet) Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 24
+        - name: vlan0040
+          configure: true
+          enable: true
+          comment: "Local Apps (With Internet) Network"
+          method: manual
+          bridge: "{{ proxmox__ovs_bridges_config.0.name }}"
+          tag: 40
