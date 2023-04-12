@@ -1,2 +1,3 @@
 ---
 proxmox__enterprise_repository_enabled: false
+proxmox__network_interfaces_template: etc/network/interfaces.j2
