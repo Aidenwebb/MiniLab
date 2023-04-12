@@ -10,5 +10,8 @@
 - name: Run updates
   include_tasks: run_updates.yml
 
-- name: Configure network
-  include_tasks: network.yml
+# - name: Configure network
+#   include_tasks: network.yml
+
+- name: Configure network interfaces
+  include_tasks: network-interfaces.yml
