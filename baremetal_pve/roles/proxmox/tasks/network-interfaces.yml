@@ -45,6 +45,13 @@
     owner: "root"
     group: "root"
     mode: "0644"
+  register: interfaces_configured
   when: >
     proxmox__network_interfaces_config is defined and
     proxmox__network_interfaces_template is not none
+
+- name: Restart networking
+  service:
+    name: networking
+    state: restarted
+  when: interfaces_configured.changed
