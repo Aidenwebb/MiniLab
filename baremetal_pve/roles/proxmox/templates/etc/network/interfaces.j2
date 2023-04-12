@@ -56,9 +56,32 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
 {%        endif %}
 {# Setting name and method #}
 auto {{ bridge['name'] }}
-allow-ovs {{ bridge['name'] }}
 iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {%      endif %}
+{# Set Address, Netmask, Gateway if static or manual #}
+{%      if bridge['method']|lower == "static" or bridge['method']|lower == "manual" %}
+{# Set Address #}
+{%        if bridge['address'] is defined and bridge['address'] != None %}
+        address {{ bridge['address'] }}
+{%        endif %}
+{# Set Netmask #}
+{%        if bridge['netmask'] is defined and bridge['netmask'] != None %}
+        netmask {{ bridge['netmask'] }}
+{%        endif %}
+{# Set Gateway #}
+{%        if bridge['gateway'] is defined and bridge['gateway'] != None %}
+        gateway {{ bridge['gateway'] }}
+{%        endif %}
+{%      endif %}
+{# Set Parameters #}
+{%      if bridge['parameters'] is defined and bridge['parameters'] != None %}
+{%        for parameter in bridge['parameters'] %}
+        {{ parameter['param'] }} {{ parameter['value'] }}
+{%        endfor %}
+{%      endif %}
+{# Set Ports #}
+        ovs_type OVSBridge
+        ovs_ports {{ bridge['ports']|join(' ') }}
 {%   endfor %}
 
 ### End of OpenVSwitch Bridges
