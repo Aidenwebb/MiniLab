@@ -32,8 +32,37 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
         gateway {{ interface['gateway'] }}
 {%           endif %}
 {%        endif %}
-
+{# Set Parameters #}
+{%        if interface['parameters'] is defined and interface['parameters'] != None %}
+{%          for parameter in interface['parameters'] %}
+        {{ parameter['param'] }} {{ parameter['value'] }}
+{%          endfor %}
+{%        endif %}
 {%      endif %}
 {%   endfor %}
 
+### End of Network Interfaces
 {% endif %}
+
+{% if proxmox__ovs_bridges_config is defined and proxmox__ovs_bridges_config %}
+### OpenVSwitch Bridges
+
+{%   for bridge in proxmox__ovs_bridges_config %}
+{# Configuring bridge #}
+{%      if bridge['configure'] is defined and bridge['configure'] %}
+{# Setting comment#}
+{%        if bridge['comment'] is defined and bridge['comment'] != None %}
+# {{ bridge['comment'] }}
+{%        endif %}
+{# Setting name and method #}
+auto {{ bridge['name'] }}
+allow-ovs {{ bridge['name'] }}
+iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
+{%      endif %}
+{%   endfor %}
+
+### End of OpenVSwitch Bridges
+{% endif %}
+
+
+
