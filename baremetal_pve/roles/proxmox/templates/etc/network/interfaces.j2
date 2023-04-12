@@ -87,5 +87,47 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 ### End of OpenVSwitch Bridges
 {% endif %}
 
+{% if proxmox__ovs_intports_config is defined and proxmox__ovs_intports_config %}
+### OpenVSwitch Internal Ports
+
+{%   for port in proxmox__ovs_intports_config %}
+{# Configuring port #}
+{%      if port['configure'] is defined and port['configure'] %}
+{# Setting comment#}
+{%        if port['comment'] is defined and port['comment'] != None %}
+# {{ port['comment'] }}
+{%        endif %}
+{# Setting name and method #}
+auto {{ port['name'] }}
+iface {{ port['name']}} inet {{ port['method']|lower }}
+{%      endif %}
+{# Set Address, Netmask, Gateway if static or manual #}
+{%      if port['method']|lower == "static" or port['method']|lower == "manual" %}
+{# Set Address #}
+{%        if port['address'] is defined and port['address'] != None %}
+        address {{ port['address'] }}
+{%        endif %}
+{# Set Netmask #}
+{%        if port['netmask'] is defined and port['netmask'] != None %}
+        netmask {{ port['netmask'] }}
+{%        endif %}
+{# Set Gateway #}
+{%        if port['gateway'] is defined and port['gateway'] != None %}
+        gateway {{ port['gateway'] }}
+{%        endif %}
+{%      endif %}
+{# Set Parameters #}
+{%      if port['parameters'] is defined and port['parameters'] != None %}
+{%        for parameter in port['parameters'] %}
+        {{ parameter['param'] }} {{ parameter['value'] }}
+{%        endfor %}
+{%      endif %}
+{# Set Ports #}
+        ovs_type OVSIntPort
+        ovs_bridge {{ port['bridge'] }}
+        ovs_options tag={{ port['tag'] }}
+{%   endfor %}
+### End of OpenVSwitch Internal Ports
+{% endif %}
 
 
