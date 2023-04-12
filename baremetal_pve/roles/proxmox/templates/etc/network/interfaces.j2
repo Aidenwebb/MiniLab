@@ -39,8 +39,8 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
 {%          endfor %}
 {%        endif %}
 {%      endif %}
-{%   endfor %}
 
+{%   endfor %}
 ### End of Network Interfaces
 {% endif %}
 
@@ -82,8 +82,8 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {# Set Ports #}
         ovs_type OVSBridge
         ovs_ports {{ bridge['ports']|join(' ') }}
-{%   endfor %}
 
+{%   endfor %}
 ### End of OpenVSwitch Bridges
 {% endif %}
 
@@ -126,6 +126,7 @@ iface {{ port['name']}} inet {{ port['method']|lower }}
         ovs_type OVSIntPort
         ovs_bridge {{ port['bridge'] }}
         ovs_options tag={{ port['tag'] }}
+
 {%   endfor %}
 ### End of OpenVSwitch Internal Ports
 {% endif %}
