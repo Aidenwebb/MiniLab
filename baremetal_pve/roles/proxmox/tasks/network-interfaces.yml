@@ -41,7 +41,7 @@
 - name: Configure interfaces
   template:
     src: "{{ proxmox__network_interfaces_template }}"
-    dest: "/root/network_interface"
+    dest: "{{ proxmox__network_interfaces_file_dest }}"
     owner: "root"
     group: "root"
     mode: "0644"
