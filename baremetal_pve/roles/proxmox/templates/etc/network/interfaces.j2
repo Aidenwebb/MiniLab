@@ -24,10 +24,6 @@ iface lo inet loopback
 {%   for interface in proxmox__network_interfaces_config %}
 {# Configuring interface #}
 {%      if interface['configure'] is defined and interface['configure'] %}
-{# Setting comment#}
-{%        if interface['comment'] is defined and interface['comment'] != None %}
-# {{ interface['comment'] }}
-{%      endif %}
 {# Setting name and method #}
 auto {{ interface['name'] }}
 iface {{ interface['name'] }} inet {{ interface['method']|lower }}
@@ -52,6 +48,10 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
         {{ parameter['param'] }} {{ parameter['value'] }}
 {%          endfor %}
 {%        endif %}
+{# Setting comment#}
+{%        if interface['comment'] is defined and interface['comment'] != None %}
+# {{ interface['comment'] }}
+{%        endif %}
 {%      endif %}
 
 {%   endfor %}
@@ -64,14 +64,9 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
 {%   for bridge in proxmox__ovs_bridges_config %}
 {# Configuring bridge #}
 {%      if bridge['configure'] is defined and bridge['configure'] %}
-{# Setting comment#}
-{%        if bridge['comment'] is defined and bridge['comment'] != None %}
-# {{ bridge['comment'] }}
-{%        endif %}
 {# Setting name and method #}
 auto {{ bridge['name'] }}
 iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
-{%      endif %}
 {# Set Address, Netmask, Gateway if static or manual #}
 {%      if bridge['method']|lower == "static" or bridge['method']|lower == "manual" %}
 {# Set Address #}
@@ -96,6 +91,11 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {# Set Ports #}
         ovs_type OVSBridge
         ovs_ports {{ bridge['ports']|join(' ') }}
+{# Setting comment#}
+{%        if bridge['comment'] is defined and bridge['comment'] != None %}
+# {{ bridge['comment'] }}
+{%        endif %}
+{%      endif %}
 
 {%   endfor %}
 ### End of OpenVSwitch Bridges
@@ -107,14 +107,9 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {%   for port in proxmox__ovs_intports_config %}
 {# Configuring port #}
 {%      if port['configure'] is defined and port['configure'] %}
-{# Setting comment#}
-{%        if port['comment'] is defined and port['comment'] != None %}
-# {{ port['comment'] }}
-{%        endif %}
 {# Setting name and method #}
 auto {{ port['name'] }}
 iface {{ port['name']}} inet {{ port['method']|lower }}
-{%      endif %}
 {# Set Address, Netmask, Gateway if static or manual #}
 {%      if port['method']|lower == "static" or port['method']|lower == "manual" %}
 {# Set Address #}
@@ -140,6 +135,11 @@ iface {{ port['name']}} inet {{ port['method']|lower }}
         ovs_type OVSIntPort
         ovs_bridge {{ port['bridge'] }}
         ovs_options tag={{ port['tag'] }}
+{# Setting comment#}
+{%        if port['comment'] is defined and port['comment'] != None %}
+# {{ port['comment'] }}
+{%        endif %}
+{%      endif %}
 
 {%   endfor %}
 ### End of OpenVSwitch Internal Ports
