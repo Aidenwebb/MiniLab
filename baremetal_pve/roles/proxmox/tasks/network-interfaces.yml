@@ -1,4 +1,43 @@
 ---
+- name: Install OVS
+  apt:
+    name: openvswitch-switch
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+    force_apt_get: yes
+
+- name: Add OVS bridges
+  openvswitch_bridge:
+    bridge: "{{ item.name }}"
+    state: present
+  with_items: "{{ proxmox__ovs_bridges_config }}"
+  when: >
+    proxmox__ovs_bridges_config is defined and
+    proxmox__ovs_bridges_config is not none
+
+- name: Add NICs to bridges
+  openvswitch_port:
+    bridge: "{{ item.name }}"
+    port: "{{ item.nic }}"
+    state: present
+  with_items: "{{ proxmox__ovs_bridges_config }}"
+  when: >
+    proxmox__ovs_bridges_config is defined and
+    proxmox__ovs_bridges_config is not none
+
+- name: Add OVS IntPorts
+  openvswitch_port:
+    bridge: "{{ item.bridge }}"
+    port: "{{ item.name }}"
+    tag: "{{ item.tag }}"
+    state: present
+    set: Interface '{{ item.name }}' type=internal
+  with_items: "{{ proxmox__ovs_intports_config }}"
+  when: >
+    proxmox__ovs_intports_config is defined and
+    proxmox__ovs_intports_config is not none
+
 - name: Configure interfaces
   template:
     src: "{{ proxmox__network_interfaces_template }}"
