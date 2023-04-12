@@ -26,6 +26,7 @@
           enable: true
           comment: "OVS Bridge"
           method: manual
+          nic: eno1
           ports:
             - eno1
             - vlan0004
