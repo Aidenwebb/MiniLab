@@ -19,3 +19,9 @@
     mode: 0644
   when: pxe_server__boot_image_url is defined
   register: pxe_server__boot_image_result
+
+- name: Start PXE server
+  community.docker.docker_compose:
+    project_src: "{{ role_path }}/files"
+    state: present
+    remove_orphans: yes
