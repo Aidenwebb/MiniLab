@@ -1,8 +1,8 @@
 .POSIX:
 .PHONY: *
 
-default: baremetal
+default: baremetal_pve
 
-baremetal: 
-	@echo "Building baremetal..."
-	make -C baremetal
+baremetal_pve: 
+	@echo "Building baremetal_pve..."
+	make -C baremetal_pve
