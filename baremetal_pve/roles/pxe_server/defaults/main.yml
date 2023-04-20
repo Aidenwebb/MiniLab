@@ -1,0 +1,6 @@
+pxe_server__debian_mirror: deb.debian.org
+pxe_server__architecture: amd64
+pxe_server__debian_release: bullseye
+
+pxe_server__boot_image_url: https://{{ pxe_server__debian_mirror }}/debian/dists/{{ pxe_server__debian_release }}/main/installer-{{ pxe_server__architecture }}/current/images/netboot/netboot.tar.gz
+pxe_server__boot_image_checksum_url: https://{{ pxe_server__debian_mirror }}/debian/dists/{{ pxe_server__debian_release }}/main/installer-{{ pxe_server__architecture }}/current/images/SHA256SUMS
