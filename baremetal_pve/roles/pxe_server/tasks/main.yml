@@ -20,6 +20,11 @@
   when: pxe_server__boot_image_url is defined
   register: pxe_server__boot_image_result
 
+- name: Extract boot image
+  command:
+    cmd: tar -xzf "{{ pxe_server__boot_image_result.dest }}" -C "{{ role_path }}/files/data/tftp"
+    creates: "{{ role_path }}/files/data/tftp"
+
 - name: Start PXE server
   community.docker.docker_compose:
     project_src: "{{ role_path }}/files"
