@@ -5,7 +5,6 @@ services:
     image: "pghalliday/tftp"
     container_name: "tftp"
     restart: always
-    ports:
-      - "69:69/udp"
+    network_mode: host
     volumes:
       - "./data/tftp:/var/tftpboot"

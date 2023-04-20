@@ -23,10 +23,11 @@
 - name: Extract boot image
   command:
     cmd: tar -xzf "{{ pxe_server__boot_image_result.dest }}" -C "{{ role_path }}/files/data/tftp"
-    creates: "{{ role_path }}/files/data/tftp"
+    creates: "{{ role_path }}/files/data/tftp/version.info"
 
 - name: Start PXE server
   community.docker.docker_compose:
     project_src: "{{ role_path }}/files"
+    recreate: always
     state: present
     remove_orphans: yes
