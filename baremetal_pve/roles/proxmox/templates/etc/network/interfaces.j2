@@ -19,7 +19,7 @@ iface lo inet loopback
 
 {% if proxmox__network_interfaces_config is defined %}
 
-### Network Interfaces
+{# ### Network Interfaces #}
 
 {%   for interface in proxmox__network_interfaces_config %}
 {# Configuring interface #}
@@ -55,11 +55,11 @@ iface {{ interface['name'] }} inet {{ interface['method']|lower }}
 {%      endif %}
 
 {%   endfor %}
-### End of Network Interfaces
+{# ### End of Network Interfaces #}
 {% endif %}
 
 {% if proxmox__ovs_bridges_config is defined and proxmox__ovs_bridges_config %}
-### OpenVSwitch Bridges
+{# ### OpenVSwitch Bridges #}
 
 {%   for bridge in proxmox__ovs_bridges_config %}
 {# Configuring bridge #}
@@ -89,8 +89,8 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {%        endfor %}
 {%      endif %}
 {# Set Ports #}
-        ovs_type OVSBridge
-        ovs_ports {{ bridge['ports']|join(' ') }}
+	ovs_type OVSBridge
+	ovs_ports {{ bridge['ports']|join(' ') }}
 {# Setting comment#}
 {%        if bridge['comment'] is defined and bridge['comment'] != None %}
 # {{ bridge['comment'] }}
@@ -98,11 +98,11 @@ iface {{ bridge['name']}} inet {{ bridge['method']|lower }}
 {%      endif %}
 
 {%   endfor %}
-### End of OpenVSwitch Bridges
+{# ### End of OpenVSwitch Bridges #}
 {% endif %}
 
 {% if proxmox__ovs_intports_config is defined and proxmox__ovs_intports_config %}
-### OpenVSwitch Internal Ports
+{# ### OpenVSwitch Internal Ports #}
 
 {%   for port in proxmox__ovs_intports_config %}
 {# Configuring port #}
@@ -142,7 +142,7 @@ iface {{ port['name']}} inet {{ port['method']|lower }}
 {%      endif %}
 
 {%   endfor %}
-### End of OpenVSwitch Internal Ports
+{# ### End of OpenVSwitch Internal Ports #}
 {% endif %}
 
 

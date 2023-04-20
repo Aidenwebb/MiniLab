@@ -7,22 +7,31 @@
     cache_valid_time: 3600
     force_apt_get: yes
 
-- name: Add OVS bridge
+- name: Add OVS bridges
   openvswitch_bridge:
-    bridge: vmbr1
+    bridge: "{{ proxmox__ovs_bridge_interface }}"
     state: present
 
 - name: Create OVS VLANS
   openvswitch_port:
-    bridge: vmbr1
+    bridge: "{{ proxmox__ovs_bridge_interface }}"
     port: 'vlan{{ "%04d" | format(item) }}'
     tag: "{{ item }}"
     state: present
     set: Interface vlan{{ "%04d" | format(item) }} type=internal
   loop: "{{ proxmox__vlans }}"
 
+- name: Add VLAN interfaces
+  interfaces_file:
+    dest: /etc/network/interfaces
+    iface: vlan{{ "%04d" | format(item) }}
+    option: ovs_bridge
+    value: "{{ proxmox__ovs_bridge_interface }}"
+    state: present
+  loop: "{{ proxmox__vlans }}"
+
 - name: Add Physical NIC to bridge
   openvswitch_port:
-    bridge: vmbr1
+    bridge: "{{ proxmox__ovs_bridge_interface }}"
     port: "{{ hostvars[inventory_hostname]['network_interface'] }}"
     state: present
