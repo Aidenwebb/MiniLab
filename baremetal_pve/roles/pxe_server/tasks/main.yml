@@ -1,0 +1,21 @@
+---
+- name: Get boot image checksum
+  uri:
+    url: "{{ pxe_server__boot_image_checksum_url }}"
+    return_content: yes
+  when: pxe_server__boot_image_url is defined
+  register: pxe_server__boot_image_checksum_result
+
+- name: Set boot image checksum
+  set_fact:
+    pxe_server__boot_image_checksum: "{{ pxe_server__boot_image_checksum_result.content | regex_search('\\b([a-fA-F0-9]{64})\\s+.*(?<=\\.\\/netboot\\/netboot\\.tar\\.gz)','\\1') | first}}"
+  when: pxe_server__boot_image_url is defined
+
+- name: Download boot image
+  get_url:
+    url: "{{ pxe_server__boot_image_url }}"
+    dest: "{{ role_path }}/files/data/boot/{{ pxe_server__boot_image_url | basename }}"
+    checksum: "sha256:{{ pxe_server__boot_image_checksum }}"
+    mode: 0644
+  when: pxe_server__boot_image_url is defined
+  register: pxe_server__boot_image_result
