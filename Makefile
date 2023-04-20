@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY:
+.PHONY: *
 
 default: baremetal
 
