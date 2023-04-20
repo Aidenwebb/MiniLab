@@ -4,8 +4,8 @@ baremetal:
       hosts:
         baremetal0:
           {
-            ansible_host: 172.31.9.100,
-            mac: 9E:21:EC:4D:5F:C1,
+            ansible_host: 192.168.1.237,
+            mac: 10:e7:c6:00:70:37,
             disk: sda,
             network_interface: eno1,
           }
