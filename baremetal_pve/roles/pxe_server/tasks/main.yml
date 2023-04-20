@@ -25,6 +25,18 @@
     cmd: tar -xzf "{{ pxe_server__boot_image_result.dest }}" -C "{{ role_path }}/files/data/tftp"
     creates: "{{ role_path }}/files/data/tftp/version.info"
 
+- name: Link grubx64.efi
+  file:
+    src: "{{ role_path }}/files/data/tftp/debian-installer/amd64/grubx64.efi"
+    dest: "{{ role_path }}/files/data/tftp/grubx64.efi"
+    state: link
+
+- name: Link grub
+  file:
+    src: "{{ role_path }}/files/data/tftp/debian-installer/amd64/grub"
+    dest: "{{ role_path }}/files/data/tftp/grub"
+    state: link
+
 - name: Start PXE server
   community.docker.docker_compose:
     project_src: "{{ role_path }}/files"
