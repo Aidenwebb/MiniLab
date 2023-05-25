@@ -27,3 +27,17 @@
   loop:
     - /etc/rancher/k3s
     - /etc/rancher/node
+
+- name: Check if k3s token file exists on nodes
+  ansible.builtin.stat:
+    path: /etc/rancher/node/token
+  register: k3s__k3s_token_file_stat
+
+- name: Generate k3s token
+  when: not k3s__k3s_token_file_stat.stat.exists
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits,punctuation') }}"
+    dest: /etc/rancher/node/token
+    owner: root
+    group: root
+    mode: "0600"
