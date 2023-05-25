@@ -1,0 +1,12 @@
+kube:
+  children:
+    masters:
+      hosts:
+        kubectl0: {ansible_host: 192.168.10.9}
+        kubectl1: {ansible_host: 192.168.10.10}
+        kubectl2: {ansible_host: 192.168.10.11}
+    workers:
+      hosts:
+        kubewrk0: {ansible_host: 192.168.10.12}
+        kubewrk1: {ansible_host: 192.168.10.13}
+        kubewrk2: {ansible_host: 192.168.10.14}
