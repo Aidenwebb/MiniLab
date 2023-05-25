@@ -28,15 +28,31 @@
     - /etc/rancher/k3s
     - /etc/rancher/node
 
-- name: Check if k3s token file exists on nodes
+- name: Check if k3s token file exists on first node - will use this token for all nodes
+  run_once: true
   ansible.builtin.stat:
     path: /etc/rancher/node/token
   register: k3s__k3s_token_file_stat
 
-- name: Generate k3s token
+- name: Generate k3s token on first node if missing
+  run_once: true
   when: not k3s__k3s_token_file_stat.stat.exists
   ansible.builtin.copy:
     content: "{{ lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits,punctuation') }}"
+    dest: /etc/rancher/node/token
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Get k3s token from first node
+  run_once: true
+  ansible.builtin.slurp:
+    src: /etc/rancher/node/token
+  register: k3s__k3s_token_file_from_first_node
+
+- name: Copy first node's k3s token to all nodes
+  ansible.builtin.copy:
+    content: "{{ k3s__k3s_token_file_from_first_node['content'] | b64decode }}"
     dest: /etc/rancher/node/token
     owner: root
     group: root
