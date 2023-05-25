@@ -1,3 +1,8 @@
 ---
 k3s__k3s_version: v1.27.1+k3s1
 k3s__k3s_token_file: /etc/rancher/node/token
+k3s__k3s_server_config:
+  disable:
+    - local-storage
+    - servicelb
+    - traefik

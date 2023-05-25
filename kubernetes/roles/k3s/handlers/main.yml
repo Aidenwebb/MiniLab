@@ -1,0 +1,8 @@
+- name: Restart k3s
+  ansible.builtin.service:
+    name: k3s
+    state: restarted
+    enabled: true
+  register: k3s_restart_result
+  until: k3s_restart_result is succeeded
+  retries: 5

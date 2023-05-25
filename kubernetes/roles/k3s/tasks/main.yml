@@ -31,7 +31,7 @@
 - name: Check if k3s token file exists on first node - will use this token for all nodes
   run_once: true
   ansible.builtin.stat:
-    path: {{ k3s__k3s_token_file }}
+    path: "{{ k3s__k3s_token_file }}"
   register: k3s__k3s_token_file_stat
 
 - name: Generate k3s token on first node if missing
@@ -39,7 +39,7 @@
   when: not k3s__k3s_token_file_stat.stat.exists
   ansible.builtin.copy:
     content: "{{ lookup('ansible.builtin.password', '/dev/null length=32 chars=ascii_letters,digits,punctuation') }}"
-    dest: {{ k3s__k3s_token_file }}
+    dest: "{{ k3s__k3s_token_file }}"
     owner: root
     group: root
     mode: "0600"
@@ -47,13 +47,34 @@
 - name: Get k3s token from first node
   run_once: true
   ansible.builtin.slurp:
-    src: {{ k3s__k3s_token_file }}
+    src: "{{ k3s__k3s_token_file }}"
   register: k3s__k3s_token_file_from_first_node
 
 - name: Copy first node's k3s token to all nodes
   ansible.builtin.copy:
     content: "{{ k3s__k3s_token_file_from_first_node['content'] | b64decode }}"
-    dest: {{ k3s__k3s_token_file }}
+    dest: "{{ k3s__k3s_token_file }}"
     owner: root
     group: root
     mode: "0600"
+
+- name: Copy k3s config template to nodes
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - src: config.yaml.j2
+      dest: /etc/rancher/k3s/config.yaml
+
+- name: Create k3s systemd service
+  ansible.builtin.template:
+    src: k3s.service.j2
+    dest: /etc/systemd/system/k3s.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart k3s
