@@ -7,7 +7,7 @@
     mode: "0755"
   delegate_to: localhost
   run_once: true
-  register: k3s_binary
+  register: k3s__k3s_binary
 
 - name: Copy k3s binary to nodes
   ansible.builtin.copy:
