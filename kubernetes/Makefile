@@ -12,3 +12,7 @@ bootstrap: ~/.ssh/id_ed25519
 		--inventory inventories/${env}.yml \
 		bootstrap.yml
 
+cluster: ~/.ssh/id_ed25519
+	ansible-playbook \
+		--inventory inventories/${env}.yml \
+		cluster.yml
