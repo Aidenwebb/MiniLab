@@ -78,3 +78,17 @@
     mode: "0644"
   notify:
     - Restart k3s
+
+- name: Slurp the Kubernetes Config File from first node
+  run_once: true
+  ansible.builtin.slurp:
+    src: /etc/rancher/k3s/k3s.yaml
+  register: k3s__k3s_config_file
+
+- name: Write Kubernetes Config file to local disk with correct cluster address
+  run_once: true
+  ansible.builtin.copy:
+    content: "{{ k3s__k3s_config_file['content'] | b64decode | replace('127.0.0.1', hostvars[groups['masters'][0]].ansible_host) }}"
+    dest: "{{ k3s__k3s_config_file_local_path }}"
+    mode: "0600"
+  delegate_to: localhost
