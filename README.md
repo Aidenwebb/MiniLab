@@ -19,3 +19,14 @@ This project uses Infrastructure as Code and GitOps to automate the provisioning
 ### Goals
 
 - [ ] Automate provisioning of baremetal hosts
+- [ ] Automate provisioning of VMs
+- [X] Automate Kubernetes cluster provisioning
+  - [X] 3 Control Plane Nodes
+  - [X] 3 Worker Nodes
+- [ ] Automate Kubernetes cluster management
+  - [ ] Automate cluster upgrades
+  - [ ] Automate certificate management
+- [ ] Create GitOps Workflow
+  - [ ] Automate deployment of applications
+- [ ] Automate DNS record updates for publicly exposed services
+- [ ] Install common applications
