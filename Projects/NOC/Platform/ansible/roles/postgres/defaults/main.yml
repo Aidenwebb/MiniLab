@@ -1,4 +1,0 @@
-postgresql__postgres_password: postgres
-postgresql__postgres_user: postgres
-postgresql__postgres_db: postgres
-postgresql__postgres_data_target: /var/lib/postgresql/data
