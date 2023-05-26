@@ -1,0 +1,5 @@
+---
+- name: Create Kubernetes Cluster
+  hosts: kube
+  roles:
+    - k3s
