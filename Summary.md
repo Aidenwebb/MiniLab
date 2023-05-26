@@ -35,6 +35,7 @@
 | OS       | Proxmox VE 7.4 (Debian)                  |
 
 **Labels:**
+
 - `EDG2-01`
 - `EDG2-02`
 - `EDG2-03`
@@ -55,7 +56,7 @@
 
 #### VM Hosts
 
-* 3x Clustered [HP Elitedesk 800 G2 Mini](#hp-elitedesk-800-g2-mini)
+- 3x Clustered [HP Elitedesk 800 G2 Mini](#hp-elitedesk-800-g2-mini)
 
 #### VMs
 
@@ -73,4 +74,3 @@
 | 6    | Cluster_Net        | 192.168.6.0/24  | PVE Cluster Traffic             |
 | 7    | CEPH_Cluster_Net   | 192.168.7.0/24  | CEPH Cluster Traffic            |
 | 10   | Lab Default Bridge | 192.168.10.0/24 | Bridged to Default for access   |
-
