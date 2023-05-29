@@ -76,6 +76,8 @@
     owner: root
     group: root
     mode: "0644"
+  notify: 
+  - Restart k3s
 
 - name: Enable and start k3s service
   ansible.builtin.service:
