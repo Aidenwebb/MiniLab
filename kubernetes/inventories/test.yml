@@ -2,11 +2,11 @@ kube:
   children:
     masters:
       hosts:
-        kubectl0: {ansible_host: 192.168.11.9}
-        kubectl1: {ansible_host: 192.168.11.10}
-        kubectl2: {ansible_host: 192.168.11.11}
+        kubectl0: {ansible_host: 192.168.12.9}
+        kubectl1: {ansible_host: 192.168.12.10}
+        kubectl2: {ansible_host: 192.168.12.11}
     workers:
       hosts:
-        kubewrk0: {ansible_host: 192.168.11.12}
-        kubewrk1: {ansible_host: 192.168.11.13}
-        kubewrk2: {ansible_host: 192.168.11.14}
+        kubewrk0: {ansible_host: 192.168.12.12}
+        kubewrk1: {ansible_host: 192.168.12.13}
+        kubewrk2: {ansible_host: 192.168.12.14}
