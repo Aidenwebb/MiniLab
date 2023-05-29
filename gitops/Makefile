@@ -8,6 +8,8 @@ gen-namespace:
 namespace: gen-namespace
 	kubectl apply -f namespace-argocd.yml
 
+.PHONY: argocd
 argocd:
-	kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+	helm repo add argo https://argoproj.github.io/argo-helm
+	helm repo update
+	helm install argocd argo/argo-cd -n argocd --create-namespace --version 5.27.5
