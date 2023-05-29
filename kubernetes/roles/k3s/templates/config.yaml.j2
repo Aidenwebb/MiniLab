@@ -5,5 +5,7 @@ server: https://{{ hostvars[groups['masters'][0]].ansible_host }}:6443
 {% endif %}
 token-file: {{ k3s__k3s_token_file }}
 {% if 'masters' in group_names %}
+{% if k3s__k3s_server_config is defined and k3s__k3s_server_config is not none %}
 {{ k3s__k3s_server_config | to_nice_yaml }}
+{% endif %}
 {% endif %}
