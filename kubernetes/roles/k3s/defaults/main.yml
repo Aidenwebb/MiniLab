@@ -6,4 +6,5 @@ k3s__k3s_server_config:
     - local-storage
     - servicelb
     - traefik
-k3s__k3s_config_file_local_path: "{{ playbook_dir }}/outputs/kubeconfig.yaml"
+env: prod
+k3s__k3s_config_file_local_path: "{{ playbook_dir }}/outputs/{{ env }}-kubeconfig.yaml"

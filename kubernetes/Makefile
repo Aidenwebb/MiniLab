@@ -14,5 +14,6 @@ bootstrap: ~/.ssh/id_ed25519
 
 cluster: ~/.ssh/id_ed25519
 	ansible-playbook \
+		--extra-vars="env=${env}" \
 		--inventory inventories/${env}.yml \
-		cluster.yml
+		cluster.yml 
