@@ -17,3 +17,9 @@ cluster: ~/.ssh/id_ed25519
 		--extra-vars="env=${env}" \
 		--inventory inventories/${env}.yml \
 		cluster.yml 
+
+gitops: ~/.ssh/id_ed25519
+	ansible-playbook \
+		--extra-vars="env=${env}" \
+		--inventory inventories/${env}.yml \
+		gitops.yml

@@ -1,0 +1,28 @@
+---
+
+- name: Create namespace
+  kubernetes.core.k8s:
+    name: "{{ gitops__k8s_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Add argo repo
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
+    state: present
+
+- name: Install argo helm chart
+  kubernetes.core.helm:
+    name: argo-cd
+    chart_ref: argo/argo-cd
+    chart_version: 5.27.5
+    release_namespace: "{{ gitops__k8s_namespace }}"
+    values_files:
+      - "{{ role_path }}/files/values.yaml"
+    state: present
+
+- name: Create argo ingress
+  kubernetes.core.k8s:
+    resource_definition: "{{ lookup('template', role_path + '/files/ingress.yaml') }}"

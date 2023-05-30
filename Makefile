@@ -6,7 +6,7 @@ env ?= prod
 KUBECONFIG ?= $(shell pwd)/kubernetes/outputs/kubeconfig-$(env).yaml
 KUBE_CONFIG_PATH = $(KUBECONFIG)
 
-default: kubernetes gitops
+default: kubernetes #gitops
 
 kubernetes: 
 	@echo "Building kubernetes"
@@ -14,4 +14,4 @@ kubernetes:
 
 gitops:
 	@echo "Building gitops"
-	make -C gitops
+	make -C kubernetes gitops
