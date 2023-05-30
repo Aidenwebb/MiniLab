@@ -3,3 +3,5 @@
   hosts: localhost
   roles:
     - gitops
+  vars:
+    gitops__base_domain: "{{ 'test.minilab.homelan.win' if env == 'test' else 'minilab.homelan.win' }}"

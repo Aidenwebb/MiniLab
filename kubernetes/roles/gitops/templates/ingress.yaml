@@ -8,13 +8,13 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`{{ gitops__argo_server_host }}`)
+      match: Host(`{{ gitops__argo_server_fqdn }}`)
       priority: 10
       services:
         - name: argo-cd-argocd-server
           port: 80
     - kind: Rule
-      match: Host(`{{ gitops__argo_server_host }}`) && Headers(`Content-Type`, `application/grpc`)
+      match: Host(`{{ gitops__argo_server_fqdn }}`) && Headers(`Content-Type`, `application/grpc`)
       priority: 11
       services:
         - name: argo-cd-argocd-server
