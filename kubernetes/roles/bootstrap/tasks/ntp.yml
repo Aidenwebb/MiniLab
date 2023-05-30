@@ -1,0 +1,3 @@
+- name: Force chronyc to fetch time
+  command: chronyc -a makestep
+  become: true

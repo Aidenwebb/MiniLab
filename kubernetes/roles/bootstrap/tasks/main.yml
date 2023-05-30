@@ -5,3 +5,6 @@
   register: hostname_result
   until: hostname_result is succeeded
   retries: 5
+
+- name: Setup NTP
+  include_tasks: ntp.yml
