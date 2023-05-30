@@ -1,5 +1,4 @@
 ---
-
 - name: Create namespace
   kubernetes.core.k8s:
     name: "{{ gitops__k8s_namespace }}"
@@ -25,4 +24,4 @@
 
 - name: Create argo ingress
   kubernetes.core.k8s:
-    resource_definition: "{{ lookup('template', role_path + '/files/ingress.yaml') }}"
+    resource_definition: "{{ lookup('template', role_path + '/templates/ingress.yaml') }}"

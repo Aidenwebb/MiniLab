@@ -1,1 +1,2 @@
 gitops__k8s_namespace: argo-cd
+gitops__argo_server_host: argocd.test.minilab.homelan.win
