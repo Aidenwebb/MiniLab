@@ -25,3 +25,7 @@
 - name: Create argo ingress
   kubernetes.core.k8s:
     resource_definition: "{{ lookup('template', role_path + '/templates/ingress.yaml') }}"
+
+- name: Add argo apps
+  kubernetes.core.k8s:
+    resource_definition: "{{ lookup('template', role_path + '/templates/apps.yaml') }}"
