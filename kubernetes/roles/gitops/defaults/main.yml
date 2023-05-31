@@ -1,4 +1,4 @@
-gitops__k8s_namespace: argo-cd
+gitops__k8s_namespace: argocd
 gitops__base_domain: minilab.homelan.win
 gitops__argocd_server_hostname: argocd
 gitops__argo_server_fqdn: "{{ gitops__argocd_server_hostname }}.{{ gitops__base_domain }}"

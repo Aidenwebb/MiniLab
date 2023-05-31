@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: argo-cd-argocd-server
-  namespace: argo-cd
+  namespace: "{{ gitops__k8s_namespace }}"
 spec:
   entryPoints:
     - websecure
