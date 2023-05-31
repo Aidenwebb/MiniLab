@@ -4,13 +4,13 @@ metadata:
   name: kustomize-guestbook
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: kustomize-guestbook
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: kustomize-guestbook
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}

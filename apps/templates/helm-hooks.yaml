@@ -4,13 +4,14 @@ metadata:
   name: helm-hooks
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: helm-hooks
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: helm-hooks
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+
